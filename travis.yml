@@ -1,0 +1,21 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t ferranlao/react-test -f ./client/dockerfile.dev ./client
+
+script:
+  - docker run ferranlao/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t ferranlao/multi-client ./clien
+  - docker build -t ferranlao/multi-nginx ./nginx
+  - docker build -t ferranlao/multi-server ./server
+  - docker build -t ferranlao/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push ferranlao/multi-client
+  - docker push ferranlao/multi-nginx
+  - docker push ferranlao/multi-server
+  - docker push ferranlao/multi-worker
