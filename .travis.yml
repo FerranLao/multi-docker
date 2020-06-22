@@ -11,7 +11,7 @@ script:
   - docker run -e CI=true ferranlao/react-test npm test
 
 after_success:
-  - docker build -t ferranlao/multi-client ./clien
+  - docker build -t ferranlao/multi-client ./client
   - docker build -t ferranlao/multi-nginx ./nginx
   - docker build -t ferranlao/multi-server ./server
   - docker build -t ferranlao/multi-worker ./worker
